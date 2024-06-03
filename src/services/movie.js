@@ -1,5 +1,6 @@
 const fs = require('fs/promises');
 const { Movie } = require('../models/Movie');
+const { title } = require('process');
 
 const filePath = './data/database.json';
 
@@ -42,7 +43,33 @@ async function getMovieById(id) {
   return movie ? toMovieModel(movie) : movie;
 }
 
+async function createMovie(movieData) {
+  const id = uuid();
+
+  const movie = {
+    id,
+    title: movieData.title,
+    genre: movieData.genre,
+    director: movieData.director,
+    year: Number(movieData.year),
+    imageURL: movieData.imageURL,
+    rating: Number(movieData.rating),
+    description: movieData.description,
+  };
+
+  const movies = await readFile();
+  movies.push(movie);
+  await writeFile(movies);
+
+  return toMovieModel(movie);
+}
+
+function uuid() {
+  return 'xxx-xxx'.replace(/x/g, () => ((Math.random() * 16) | 0).toString(16));
+}
+
 module.exports = {
   getAllMovies,
   getMovieById,
+  createMovie,
 };

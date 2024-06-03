@@ -13,8 +13,12 @@ module.exports = {
       res.render('404');
       return;
     }
+
+    movie.starRating = '&#x2605;'.repeat(movie.rating);
     res.render('details', { movie });
   },
+
+
   search: (req, res) => {
     res.render('search');
   },
