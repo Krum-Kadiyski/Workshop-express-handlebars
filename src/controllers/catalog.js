@@ -1,7 +1,7 @@
 const { getAllMovies, getMovieById } = require('../services/movie');
 
 module.exports = {
-  home: async (req, res) => {
+  home: async (_req, res) => {
     const movies = await getAllMovies();
     res.render('home', { movies });
   },

@@ -1,5 +1,5 @@
 module.exports = {
-  notFound: (req, res) => {
+  notFound: (_req, res) => {
     res.render('404');
   },
 };

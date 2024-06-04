@@ -5,7 +5,7 @@ const { createGet, createPost } = require('../controllers/movie');
 const { notFound } = require('../controllers/404');
 
 const router = Router();
-//TODO add routes
+
 router.get('/', home);
 router.get('/about', about);
 router.get('/details/:id', details);

@@ -1,7 +1,7 @@
 const { createMovie } = require('../services/movie');
 
 module.exports = {
-  createGet: (req, res) => {
+  createGet: (_req, res) => {
     res.render('create');
   },
 
