@@ -158,7 +158,8 @@ footer {
   border-color: red;
 }
 
-.error input.imputFields, .error textarea.imputFields {
+.error input.imputFields,
+.error textarea.imputFields {
   color: red;
 }
 
