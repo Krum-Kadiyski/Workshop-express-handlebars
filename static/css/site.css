@@ -155,12 +155,13 @@ footer {
 }
 
 .error label {
-  border-color: red;
+  color: red;
 }
 
 .error input.imputFields,
-.error textarea.imputFields {
-  color: red;
+.error textarea.imputFields,
+.error select {
+  border-color: red;
 }
 
 @keyframes cssAnimation {

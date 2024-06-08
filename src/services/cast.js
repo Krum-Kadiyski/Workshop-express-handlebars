@@ -14,7 +14,9 @@ async function createCast(castData) {
   return cast;
 }
 
-async function getAllCast() {}
+async function getAllCast() {
+  return await Cast.find().lean();
+}
 
 module.exports = {
   createCast,
