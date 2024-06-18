@@ -11,7 +11,7 @@ async function getMovieById(id) {
   return movie;
 }
 
-async function createMovie(movieData) {
+async function createMovie(movieData, authorId) {
   const movie = new Movie({
     title: movieData.title,
     genre: movieData.genre,
@@ -20,21 +20,64 @@ async function createMovie(movieData) {
     rating: Number(movieData.rating),
     description: movieData.description,
     imageURL: movieData.imageURL,
+    author: authorId,
   });
 
   await movie.save();
   return movie;
 }
 
-// function uuid() {
-//   return 'xxx-xxx'.replace(/x/g, () => ((Math.random() * 16) | 0).toString(16));
-// }
-
-async function attachCastToMovie(movieId, castId) {
+async function updateMovie(movieId, movieData, userId) {
   const movie = await Movie.findById(movieId);
 
   if (!movie) {
     throw new Error(`Movie ${movieId} not found`);
+  }
+
+  if (movie.author.toString() != userId) {
+    throw new Error('Access denied');
+  }
+
+  movie.title = movieData.title;
+  movie.genre = movieData.genre;
+  movie.director = movieData.director;
+  movie.year = Number(movieData.year);
+  movie.rating = Number(movieData.rating);
+  movie.description = movieData.description;
+  movie.imageURL = movieData.imageURL;
+
+  await movie.save();
+
+  return movie;
+}
+
+async function deleteMovie(movieId, userId) {
+  const movie = await Movie.findById(movieId)
+
+  if(!movie) {
+    throw new Error(`Movie ${movieId} not found`)
+  }
+
+  if (movie.author.toString() != userId) {
+    throw new Error('Access denied')
+  }
+
+  await Movie.findByIdAndDelete(movieId)
+}
+
+// function uuid() {
+//   return 'xxx-xxx'.replace(/x/g, () => ((Math.random() * 16) | 0).toString(16));
+// }
+
+async function attachCastToMovie(movieId, castId, userId) {
+  const movie = await Movie.findById(movieId);
+
+  if (!movie) {
+    throw new Error(`Movie ${movieId} not found`);
+  }
+
+  if (movie.author.toString() != userId) {
+    throw new Error('Access denied');
   }
 
   movie.cast.push(castId);
@@ -48,4 +91,6 @@ module.exports = {
   getMovieById,
   createMovie,
   attachCastToMovie,
+  updateMovie,
+  deleteMovie
 };
